@@ -5,7 +5,7 @@
 <br>Stat 5: <input type="number" id="stat5" name="Stat 5" min="3" max="18" value=10 onchange="updateOdds()">
 <br>Stat 6: <input type="number" id="stat6" name="Stat 6" min="3" max="18" value=8  onchange="updateOdds()">
 <br><br>
-Odds: <span id="oddsDisplay">Blah</span>
+Odds: <span id="probDisplay">Blah</span>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -29,17 +29,35 @@ function processData(allText) {
         var data = allTextLines[i].split(',');
         if (data.length == headers.length) {
 
-            var tarr = [];
+            var tarr = {};
             for (var j=0; j<headers.length; j++) {
-                tarr.push(headers[j]+":"+data[j]);
+				tarr[headers[j]] = data[j];
             }
             lines.push(tarr);
         }
     }
     rawData = lines;
+	updateOdds();
 }
 
 function updateOdds(){
-
+	var inputStats = [];
+	for (var i=0; i<6; i++){
+		inputStats.push($("#stat"+(i+1)).val());
+	}
+	inputStats.sort(function(a,b){return b-a});
+	for (var i=0; i<rawData.length; i++){
+		var equal = true;
+		for (var j=0; j<6; j++){
+			if (inputStats[j] !== rawData[i]['stat'+(j+1)]) {
+				equal = false;
+				break;
+			}
+		}
+		if (equal){
+			$("#probDisplay").text(rawData[i]['prob']);
+			break;
+		}
+	}
 }
 </script>
