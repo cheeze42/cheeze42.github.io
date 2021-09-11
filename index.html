@@ -1,21 +1,23 @@
-    Stat 1: <input type="number" id="stat1" name="Stat 1" min="3" max="18" value=15>
-<br>Stat 2: <input type="number" id="stat2" name="Stat 2" min="3" max="18" value=14>
-<br>Stat 3: <input type="number" id="stat3" name="Stat 3" min="3" max="18" value=13>
-<br>Stat 4: <input type="number" id="stat4" name="Stat 4" min="3" max="18" value=12>
-<br>Stat 5: <input type="number" id="stat5" name="Stat 5" min="3" max="18" value=10>
-<br>Stat 6: <input type="number" id="stat6" name="Stat 6" min="3" max="18" value=8>
+    Stat 1: <input type="number" id="stat1" name="Stat 1" min="3" max="18" value=15 onchange="updateOdds()">
+<br>Stat 2: <input type="number" id="stat2" name="Stat 2" min="3" max="18" value=14 onchange="updateOdds()">
+<br>Stat 3: <input type="number" id="stat3" name="Stat 3" min="3" max="18" value=13 onchange="updateOdds()">
+<br>Stat 4: <input type="number" id="stat4" name="Stat 4" min="3" max="18" value=12 onchange="updateOdds()">
+<br>Stat 5: <input type="number" id="stat5" name="Stat 5" min="3" max="18" value=10 onchange="updateOdds()">
+<br>Stat 6: <input type="number" id="stat6" name="Stat 6" min="3" max="18" value=8  onchange="updateOdds()">
 <br><br>
-Odds: blah
+Odds: <span id="oddsDisplay">Blah</span>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+var rawData;
+
 $(document).ready(function() {
     $.ajax({
         type: "GET",
-        url: "4d6kh3_stat_odds.csv",
+        url: "https://raw.githubusercontent.com/cheeze42/cheeze42.github.io/main/4d6kh3_stat_odds.csv",
         dataType: "text",
         success: function(data) {processData(data);}
-     });
+    });
 });
 
 function processData(allText) {
@@ -34,6 +36,10 @@ function processData(allText) {
             lines.push(tarr);
         }
     }
-    // alert(lines);
+    rawData = lines;
+}
+
+function updateOdds(){
+
 }
 </script>
